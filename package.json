@@ -1,0 +1,34 @@
+{
+  "name": "pear-swag-explorer",
+  "main": "index.html",
+  "type": "module",
+  "pear": {
+    "name": "pear-swag-explorer",
+    "type": "desktop",
+    "gui": {
+      "backgroundColor": "#1F2430",
+      "height": 540,
+      "width": 720
+    }
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "brittle": "^3.0.0"
+  },
+  "scripts": {
+    "dev": "pear dev",
+    "test": "brittle test/*.test.js"
+  },
+  "dependencies": {
+    "@json-editor/json-editor": "^2.14.1",
+    "@rjsf/core": "^5.18.1",
+    "b4a": "^1.6.6",
+    "bare-process": "^1.3.2",
+    "hyperdht": "^6.13.1",
+    "jsonrpc-mux": "^1.1.1",
+    "protomux": "^3.5.1",
+    "protomux-rpc": "^1.5.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
