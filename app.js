@@ -49,18 +49,27 @@ const headerTemplate = (name, header) => {
 }
 
 const routeTemplate = (route) => html`
-<div class="card">
-  <div class="card-header">
-    <div class="card-title h5">${route.name}</div>
-    <div class="card-body">
-      <div>${paramTemplate(route.name, route.paramSchema)}</div>
-      <div>${headerTemplate(route.name, route.headerSchema)}</div>
-      <div>
-        <button id="${route.name}-button" class="btn btn-lg btn-primary">Execute</button>
+<div class="accordion">
+  <input type="checkbox" id="accordion-${route.name}" name="accordion-1" hidden>
+  <label class="accordion-header" for="accordion-${route.name}">
+    <i class="icon icon-arrow-right mr-1"></i>
+    ${route.name}
+  </label>
+  <div class="accordion-body">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title h5">${route.name}</div>
+        <div class="card-body">
+          <div>${paramTemplate(route.name, route.paramSchema)}</div>
+          <div>${headerTemplate(route.name, route.headerSchema)}</div>
+          <div>
+            <button id="${route.name}-button" class="btn btn-lg btn-primary">Execute</button>
+          </div>
+        </div>
+        <div class="card-footer">
+          <pre class="response" id="${route.name}-response"></pre>
+        </div>
       </div>
-    </div>
-    <div class="card-footer">
-      <pre class="response" id="${route.name}-response"></pre>
     </div>
   </div>
 </div>
