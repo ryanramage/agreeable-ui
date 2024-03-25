@@ -31,18 +31,14 @@ function destroy () {
 const paramTemplate = (name, param) => {
   if (param.not) return html`<p>no parameters</p>`
   return html`
-<div>
-  <h6>parameters</h6>
   <div id="${name}-param"></div>
-</div>
 `
 }
 
 const headerTemplate = (name, header) => {
-  if (header.not) return html``
+  if (header.not) return html`<p>no headers</p>`
   return html`
 <div>
-  <h6>headers</h6>
   <div id="${name}-header"></div>
 </div>
 `
@@ -60,8 +56,32 @@ const routeTemplate = (route) => html`
       <div class="card-header">
         <div class="card-title h5">${route.name}</div>
         <div class="card-body">
-          <div>${paramTemplate(route.name, route.paramSchema)}</div>
-          <div>${headerTemplate(route.name, route.headerSchema)}</div>
+          <div class="tile">
+            <div class="tile-icon">
+              <div class="example-tile-icon">
+                <i class="icon icon-apps centered"></i>
+              </div>
+            </div>
+            <div class="tile-content">
+              <p class="tile-title">Paramters</p>
+              <p class="tile-subtitle">
+                ${paramTemplate(route.name, route.paramSchema)}
+              <p>
+            </div>
+          </div>
+          <div class="tile">
+            <div class="tile-icon">
+              <div class="example-tile-icon">
+                <i class="icon icon-people centered"></i>
+              </div>
+            </div>
+            <div class="tile-content">
+              <p class="tile-title">Headers</p>
+              <p class="tile-subtitle">
+                ${headerTemplate(route.name, route.headerSchema)}
+              <p>
+            </div>
+          </div>
           <div>
             <button id="${route.name}-button" class="btn btn-lg btn-primary">Execute</button>
           </div>
