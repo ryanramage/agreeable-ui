@@ -6,7 +6,8 @@ import {html, render} from 'lit-html'
 
 const editorOptions = {
   disable_collapse: true,
-  disable_properties: true
+  disable_properties: true,
+  theme: 'spectre'
 }
 const dht = new DHT()
 
@@ -45,12 +46,18 @@ const headerTemplate = (name, header) => {
 }
 
 const routeTemplate = (route) => html`
-<div>
-  <h5>${route.name}</h5>
-  <div>${paramTemplate(route.name, route.paramSchema)}</div>
-  <div>${headerTemplate(route.name, route.headerSchema)}</div>
-  <div><button id="${route.name}-button">Execute</button>
-  <pre class="response" id="${route.name}-response"></pre>
+<div class="card">
+  <div class="card-header">
+    <div class="card-title h5">${route.name}</div>
+    <div class="card-body">
+      <div>${paramTemplate(route.name, route.paramSchema)}</div>
+      <div>${headerTemplate(route.name, route.headerSchema)}</div>
+      <div><button id="${route.name}-button">Execute</button>
+    </div>
+    <div class="card-footer">
+      <pre class="response" id="${route.name}-response"></pre>
+    </div>
+  </div>
 </div>
 `
 const routesTemplate = (routes) => html`
