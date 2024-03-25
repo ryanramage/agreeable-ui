@@ -7,6 +7,9 @@ import {html, render} from 'lit-html'
 const editorOptions = {
   disable_collapse: true,
   disable_properties: true,
+  disable_edit_json: true,
+  compact: true,
+  form_name_root: '',
   theme: 'spectre'
 }
 const dht = new DHT()
@@ -52,7 +55,9 @@ const routeTemplate = (route) => html`
     <div class="card-body">
       <div>${paramTemplate(route.name, route.paramSchema)}</div>
       <div>${headerTemplate(route.name, route.headerSchema)}</div>
-      <div><button id="${route.name}-button">Execute</button>
+      <div>
+        <button id="${route.name}-button" class="btn btn-lg btn-primary">Execute</button>
+      </div>
     </div>
     <div class="card-footer">
       <pre class="response" id="${route.name}-response"></pre>
@@ -83,7 +88,6 @@ function connect (peerKey) {
       let headerEditor = null
       if (!route.paramSchema.not) {
         const el = document.getElementById(`${route.name}-param`)
-        console.log(el)
         paramEditor = new JSONEditor(el, { schema: route.paramSchema, ...editorOptions }) 
       }
       if (!route.headerSchema.not) {
@@ -94,7 +98,6 @@ function connect (peerKey) {
         const payload = {}
         if (paramEditor) payload.params = paramEditor.getValue()
         if (headerEditor) payload.headers = headerEditor.getValue()
-        console.log('payload', payload)
         const start = Date.now()
         let end = null
         try {
@@ -103,7 +106,6 @@ function connect (peerKey) {
           el.innerHTML = result
           el.style.display = 'block'
         } catch (e) {
-          console.log(e)
           const el = document.getElementById(`${route.name}-response`)
           el.innerHTML = e.toString() 
           el.style.display = 'block'
@@ -116,7 +118,3 @@ function connect (peerKey) {
     })
   })
 }
-
-
-
-

@@ -6,6 +6,7 @@
       body { background-color: #ffffff; }
       .response { display: none; }
       .je-header { display: none !important;}
+      .je-object__title { display: none !important;}
     </style>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
@@ -24,15 +25,17 @@
       </section>
 
     </header>
-    <main>
-      
+    <div id="api">
 
-      <div id="api">
-        <h2 id="role"><h2>
-        <h3 id="version"></h3> 
-        <div id="description"></div>
-        <div id="routes"></div>
+      <div class="hero hero-sm bg-gray">
+        <div class="hero-body">
+          <h1 id="role"></h1>
+          <h3 id="version"></h3> 
+          <p id="description"></p>
+        </div>
       </div>
-    </main>
+
+      <div id="routes"></div>
+    </div>
   </body>
 </html>
