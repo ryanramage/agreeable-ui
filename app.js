@@ -142,10 +142,13 @@ function connect (peerKey) {
         const codeElement = document.getElementById(`${route.name}-response-code`)
         try {
           const result = await framed.request(route.name, payload)
-          codeElement.innerHTML = result
-          preElement.setAttribute('data-lang', route.returnSchema);
+          const returnType = route?.returnSchema?.type || 'void'
+          if (returnType === 'object') codeElement.innerHTML = JSON.stringify(result, null, 4)
+          else codeElement.innerHTML = result
+          preElement.setAttribute('data-lang', returnType);
         } catch (e) {
-          codeElement.innerHTML = e.toString() 
+          const message = e.toString()
+          codeElement.innerHTML = message
           preElement.setAttribute('data-lang', 'error')
         } finally {
           executeButton.classList.remove('loading')
