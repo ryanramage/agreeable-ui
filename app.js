@@ -67,7 +67,9 @@ const routeTemplate = (route) => html`
           </div>
         </div>
         <div class="card-footer">
-          <pre class="response" id="${route.name}-response"></pre>
+          <pre id="${route.name}-response" class="code response">
+            <code id="${route.name}-response-code"></code>
+          </pre>
         </div>
       </div>
     </div>
@@ -93,6 +95,7 @@ function connect (peerKey) {
     const routesHolder = document.getElementById('routes')
     render(routesTemplate(api.routes), routesHolder)
     api.routes.forEach(route => {
+      console.log(route)
       let paramEditor = null
       let headerEditor = null
       if (!route.paramSchema.not) {
@@ -109,16 +112,18 @@ function connect (peerKey) {
         if (headerEditor) payload.headers = headerEditor.getValue()
         const start = Date.now()
         let end = null
+
+        const preElement = document.getElementById(`${route.name}-response`)
+        const codeElement = document.getElementById(`${route.name}-response-code`)
         try {
           const result = await framed.request(route.name, payload)
-          const el = document.getElementById(`${route.name}-response`)
-          el.innerHTML = result
-          el.style.display = 'block'
+          codeElement.innerHTML = result
+          preElement.setAttribute('data-lang', route.returnSchema);
         } catch (e) {
-          const el = document.getElementById(`${route.name}-response`)
-          el.innerHTML = e.toString() 
-          el.style.display = 'block'
+          codeElement.innerHTML = e.toString() 
+          preElement.setAttribute('data-lang', 'error')
         } finally {
+          preElement.style.display = 'block'
           end = Date.now()
           const time = end - start
           console.log('response time', time)
