@@ -2,7 +2,7 @@
 <html>
   <head>
     <style>
-
+      #api { display: none;}
       body { background-color: #ffffff; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
@@ -10,8 +10,16 @@
   </head>
   <body>
     <main>
-      <div id='editor_holder'></div>
-      <button id='submit'>Submit (console.log)</button>
+      <div id="peerSelector">
+        <input type="text" id="peerKey" value="5487d14f0e47ae9cea53fe611e3b8e08d8e0792a5e3b76da1405dad2f726d3a1" />
+        <button id="connect">Connect</>
+      </div>
+      <div id="api">
+        <h2 id="role"><h2>
+        <h3 id="version"></h3> 
+        <div id="description"></div>
+        <div id="routes"></div>
+      </div>
     </main>
   </body>
 </html>
