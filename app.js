@@ -89,9 +89,26 @@ const routeTemplate = (route) => html`
           </div>
         </div>
         <div class="card-footer">
-          <pre id="${route.name}-response" class="code response">
-            <code id="${route.name}-response-code"></code>
-          </pre>
+          <div id="${route.name}-response" class="container response">
+            <div class="columns">
+              <div class="column col-2">
+                <p class="text-bold">Status</p>
+              </div>
+              <div class="column col-10">
+                <span id="${route.name}-status" class="label label-rounded">Ok</span>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column col-2">
+                <p class="text-bold">Response</p>
+              </div>
+              <div class="column col-10">
+                <pre id="${route.name}-response-pre" class="code">
+                  <code id="${route.name}-response-code"></code>
+                </pre>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -138,21 +155,29 @@ function connect (peerKey) {
         const start = Date.now()
         let end = null
 
-        const preElement = document.getElementById(`${route.name}-response`)
+        const responseHolder = document.getElementById(`${route.name}-response`)
+        const preElement = document.getElementById(`${route.name}-response-pre`)
         const codeElement = document.getElementById(`${route.name}-response-code`)
+        const statusElement = document.getElementById(`${route.name}-status`)
         try {
           const result = await framed.request(route.name, payload)
           const returnType = route?.returnSchema?.type || 'void'
           if (returnType === 'object') codeElement.innerHTML = JSON.stringify(result, null, 4)
           else codeElement.innerHTML = result
           preElement.setAttribute('data-lang', returnType);
+          statusElement.innerHTML = 'Ok'
+          statusElement.classList.remove('label-error')
+          statusElement.classList.add('label-success')
         } catch (e) {
           const message = e.toString()
           codeElement.innerHTML = message
           preElement.setAttribute('data-lang', 'error')
+          statusElement.innerHTML = 'Not Ok'
+          statusElement.classList.add('label-error')
+          statusElement.classList.remove('label-success')
         } finally {
           executeButton.classList.remove('loading')
-          preElement.style.display = 'block'
+          responseHolder.style.display = 'block'
           end = Date.now()
           const time = end - start
           console.log('response time', time)
