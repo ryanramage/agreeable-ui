@@ -3,6 +3,7 @@ import b4a from 'b4a'
 import Protomux from 'protomux'
 import Channel from 'jsonrpc-mux'
 import {html, render} from 'lit-html'
+import prettyMilliseconds from 'pretty-ms'
 
 const editorOptions = {
   disable_collapse: true,
@@ -98,9 +99,17 @@ const routeTemplate = (route) => html`
                 <span id="${route.name}-status" class="label label-rounded">Ok</span>
               </div>
             </div>
+            <div class="columns timestamp-row">
+              <div class="column col-2">
+                <p class="text-bold">Time</p>
+              </div>
+              <div class="column col-10">
+                <span id="${route.name}-time"></span>
+              </div>
+            </div>
             <div class="columns">
               <div class="column col-2">
-                <p class="text-bold">Response</p>
+                <p class="text-bold response-th">Response</p>
               </div>
               <div class="column col-10">
                 <pre id="${route.name}-response-pre" class="code">
@@ -159,6 +168,7 @@ function connect (peerKey) {
         const preElement = document.getElementById(`${route.name}-response-pre`)
         const codeElement = document.getElementById(`${route.name}-response-code`)
         const statusElement = document.getElementById(`${route.name}-status`)
+        const timeElement = document.getElementById(`${route.name}-time`)
         try {
           const result = await framed.request(route.name, payload)
           const returnType = route?.returnSchema?.type || 'void'
@@ -181,6 +191,7 @@ function connect (peerKey) {
           end = Date.now()
           const time = end - start
           console.log('response time', time)
+          timeElement.innerHTML = prettyMilliseconds(time)
         }
       })
     })
