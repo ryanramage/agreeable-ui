@@ -14,10 +14,12 @@ const editorOptions = {
 }
 const dht = new DHT()
 
-document.getElementById('connect').addEventListener('click', () => {
-  const peerKey = document.getElementById('peerKey').value
+const connectButton = document.getElementById('connect')
+const peerKeyElement = document.getElementById('peerKey')
+connectButton.addEventListener('click', () => {
+  connectButton.classList.add('loading')
   destroy()
-  connect(peerKey)
+  connect(peerKeyElement.value)
 })
 
 function destroy () {
@@ -106,6 +108,7 @@ function connect (peerKey) {
   const framed = new Channel(new Protomux(conn))
   conn.once('open', async () => {
     const api = await framed.request('_swag', {})
+    connectButton.classList.remove('loading')
 
     document.getElementById('api').style.display = 'block'
     document.getElementById('role').innerHTML = api.role
@@ -126,7 +129,9 @@ function connect (peerKey) {
         const el = document.getElementById(`${route.name}-header`)
         headerEditor = new JSONEditor(el, { schema: route.headerSchema, ...editorOptions}) 
       }
-      document.getElementById(`${route.name}-button`).addEventListener('click', async () => {
+      const executeButton = document.getElementById(`${route.name}-button`)
+      executeButton.addEventListener('click', async () => {
+        executeButton.classList.add('loading')
         const payload = {}
         if (paramEditor) payload.params = paramEditor.getValue()
         if (headerEditor) payload.headers = headerEditor.getValue()
@@ -143,6 +148,7 @@ function connect (peerKey) {
           codeElement.innerHTML = e.toString() 
           preElement.setAttribute('data-lang', 'error')
         } finally {
+          executeButton.classList.remove('loading')
           preElement.style.display = 'block'
           end = Date.now()
           const time = end - start
