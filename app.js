@@ -49,13 +49,6 @@ const headerTemplate = (name, header) => {
 }
 
 const routeTemplate = (route) => html`
-<div class="accordion">
-  <input type="checkbox" id="accordion-${route.name}" name="accordion-1" hidden>
-  <label class="accordion-header" for="accordion-${route.name}">
-    <i class="icon icon-arrow-right mr-1"></i>
-    ${route.name}
-  </label>
-  <div class="accordion-body">
     <div class="card">
       <div class="card-header">
         <div class="card-title h5">${route.name}</div>
@@ -123,12 +116,22 @@ const routeTemplate = (route) => html`
         </div>
       </div>
     </div>
+`
+
+const routeTemplateAccordian = (route) => html`
+<div class="accordion">
+  <input type="checkbox" id="accordion-${route.name}" name="accordion-1" hidden>
+  <label class="accordion-header" for="accordion-${route.name}">
+    <i class="icon icon-arrow-right mr-1"></i>
+    ${route.name}
+  </label>
+  <div class="accordion-body">
+    ${routeTemplate(route)}
   </div>
 </div>
 `
-const routesTemplate = (routes) => html`
-<div>${routes.map(routeTemplate)}</div>
-`;
+const routesTemplate = (routes) => (routes.length > 1) ?
+  html`<div>${routes.map(routeTemplateAccordian)}</div>` : html`<div>${routeTemplate(routes[0])}</div>`
 
 function connect (peerKey) {
   const publicKey = b4a.from(peerKey, 'hex')
