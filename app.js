@@ -18,6 +18,13 @@ const dht = new DHT()
 const heroSection = document.getElementById('hero-section')
 const connectButton = document.getElementById('connect')
 const peerKeyElement = document.getElementById('peerKey')
+
+if (Pear.config.linkData) {
+  peerKeyElement.value = Pear.config.linkData
+  connectButton.classList.add('loading')
+  connect(peerKeyElement.value)
+}
+
 connectButton.addEventListener('click', () => {
   connectButton.classList.add('loading')
   destroy()
@@ -118,7 +125,7 @@ const routeTemplate = (route) => html`
     </div>
 `
 
-const routeTemplateAccordian = (route) => html`
+const routeTemplteAccordian = (route) => html`
 <div class="accordion">
   <input type="checkbox" id="accordion-${route.name}" name="accordion-1" hidden>
   <label class="accordion-header" for="accordion-${route.name}">
@@ -148,6 +155,17 @@ function connect (peerKey) {
 
     const routesHolder = document.getElementById('routes')
     render(routesTemplate(api.routes), routesHolder)
+
+    // if there is Pear.config.linkData and only one route, go into form mode! 
+    if (Pear.config.linkData && api.routes.length === 1) {
+      // hide the hero section
+      heroSection.style.display = 'none'
+      // hide the nav 
+      document.getElementById('navbar').style.display = 'none'
+      // hide any element with class with hero
+      document.querySelectorAll('.hero').forEach(el => el.style.display = 'none')
+    }
+
     api.routes.forEach(route => {
       let paramEditor = null
       let headerEditor = null
