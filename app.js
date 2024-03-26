@@ -15,6 +15,7 @@ const editorOptions = {
 }
 const dht = new DHT()
 
+const heroSection = document.getElementById('hero-section')
 const connectButton = document.getElementById('connect')
 const peerKeyElement = document.getElementById('peerKey')
 connectButton.addEventListener('click', () => {
@@ -58,64 +59,65 @@ const routeTemplate = (route) => html`
     <div class="card">
       <div class="card-header">
         <div class="card-title h5">${route.name}</div>
-        <div class="card-body">
-          <div class="tile">
-            <div class="tile-icon">
-              <div class="example-tile-icon">
-                <i class="icon icon-apps centered"></i>
-              </div>
-            </div>
-            <div class="tile-content">
-              <p class="tile-title">Paramters</p>
-              <p class="tile-subtitle">
-                ${paramTemplate(route.name, route.paramSchema)}
-              <p>
+      </div>
+      <div class="card-body">
+        <div class="tile">
+          <div class="tile-icon">
+            <div class="example-tile-icon">
+              <i class="icon icon-apps centered"></i>
             </div>
           </div>
-          <div class="tile">
-            <div class="tile-icon">
-              <div class="example-tile-icon">
-                <i class="icon icon-people centered"></i>
-              </div>
-            </div>
-            <div class="tile-content">
-              <p class="tile-title">Headers</p>
-              <p class="tile-subtitle">
-                ${headerTemplate(route.name, route.headerSchema)}
-              <p>
-            </div>
-          </div>
-          <div>
-            <button id="${route.name}-button" class="btn btn-lg btn-primary">Execute</button>
+          <div class="tile-content">
+            <p class="tile-title">Paramters</p>
+            <p class="tile-subtitle">
+              ${paramTemplate(route.name, route.paramSchema)}
+            <p>
           </div>
         </div>
-        <div class="card-footer">
-          <div id="${route.name}-response" class="container response">
-            <div class="columns">
-              <div class="column col-2">
-                <p class="text-bold">Status</p>
-              </div>
-              <div class="column col-10">
-                <span id="${route.name}-status" class="label label-rounded">Ok</span>
-              </div>
+        <div class="tile">
+          <div class="tile-icon">
+            <div class="example-tile-icon">
+              <i class="icon icon-people centered"></i>
             </div>
-            <div class="columns timestamp-row">
-              <div class="column col-2">
-                <p class="text-bold">Time</p>
-              </div>
-              <div class="column col-10">
-                <span id="${route.name}-time"></span>
-              </div>
+          </div>
+          <div class="tile-content">
+            <p class="tile-title">Headers</p>
+            <p class="tile-subtitle">
+              ${headerTemplate(route.name, route.headerSchema)}
+            <p>
+          </div>
+        </div>
+        <div>
+          <button id="${route.name}-button" class="btn btn-lg btn-primary">Execute</button>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div id="${route.name}-response" class="container response">
+          <div class="columns">
+            <div class="column col-2">
+              <p class="text-tiny">Status</p>
             </div>
-            <div class="columns">
-              <div class="column col-2">
-                <p class="text-bold response-th">Response</p>
-              </div>
-              <div class="column col-10">
-                <pre id="${route.name}-response-pre" class="code">
-                  <code id="${route.name}-response-code"></code>
-                </pre>
-              </div>
+            <div class="column col-10">
+              <span id="${route.name}-status" class="label label-rounded">Ok</span>
+            </div>
+          </div>
+          <div class="columns timestamp-row">
+            <div class="column col-2">
+              <p class="text-tiny">Time</p>
+            </div>
+            <div class="column col-10">
+              <span id="${route.name}-time"></span>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column col-2">
+              <p class="text-tiny response-th">Response</p>
+            </div>
+            <div class="column col-10">
+              <pre id="${route.name}-response-pre" class="code">
+                <code id="${route.name}-response-code"></code>
+              </pre>
             </div>
           </div>
         </div>
@@ -135,7 +137,7 @@ function connect (peerKey) {
   conn.once('open', async () => {
     const api = await framed.request('_swag', {})
     connectButton.classList.remove('loading')
-
+    heroSection.style.display = 'none'
     document.getElementById('api').style.display = 'block'
     document.getElementById('role').innerHTML = api.role
     document.getElementById('version').innerHTML = api.version

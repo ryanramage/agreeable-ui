@@ -4,7 +4,16 @@
     <style>
       #api { display: none;}
       body { background-color: #ffffff; }
-      #peerKey { width: 600px; }
+      #peerKey { 
+        width: 100%;
+        max-width: 600px; 
+      }
+     /* Media query for screens wider than 800px */
+      @media only screen and (min-width: 700px) {
+        #peerKey {
+           width: 600px; /* Set width to 600px when screen is wider than 800px */
+        }
+      }
       .response { display: none; }
       .je-header { display: none !important;}
       .je-object__title { display: none !important;}
@@ -12,6 +21,9 @@
       .accordion-header { background: cornsilk; }
       .timestamp-row { height: 20px; }
       .response-th { position: relative; top: 40px; }
+      .about-section { padding-top: 40px; margin-bottom: 40px; }
+      .footer { padding-top: 10px; padding-left: 100px; padding-right: 100px; }
+    .footer-links { list-style-type: none; }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
@@ -23,7 +35,7 @@
     <header class="navbar">
       <section class="navbar-section">
         <div class="input-group input-inline">
-          <input id="peerKey" class="form-input" type="text" placeholder="api key" value="5487d14f0e47ae9cea53fe611e3b8e08d8e0792a5e3b76da1405dad2f726d3a1">
+          <input id="peerKey" class="form-input" type="text" placeholder="peer key" value="5487d14f0e47ae9cea53fe611e3b8e08d8e0792a5e3b76da1405dad2f726d3a1">
           <button id="connect" class="btn btn-primary input-group-btn" >Connect</button>
         </div>
       </section>
@@ -32,6 +44,12 @@
       <!-- </section> -->
 
     </header>
+
+    <div id="hero-section" class="empty">
+      <p class="empty-title h5">🍐 Ready to Connect 🍐</p>
+      <p class="empty-subtitle">Enter the peer's key and then connect</p>
+    </div>
+    
     <div id="api">
 
       <div class="hero hero-sm bg-gray">
@@ -43,6 +61,19 @@
       </div>
 
       <div id="routes"></div>
+    </div>
+    <div class="divider text-center about-section" data-content="About"></div>
+    <div class="footer">
+      <p>
+        <span class="text-gray">
+        Pear Swag is an easy way to make typed APIs in the Holepunch ecosystem. This explorer dynamically generates a ui for those apis.
+        </span>
+      </p>
+      <ul class="footer-links">
+        <li>
+          <a class="text-secondary" href="https://github.com/ryanramage"><i class="icon icon-link"></i> Slack</a>
+        </li>
+      </ul>
     </div>
   </body>
 </html>
