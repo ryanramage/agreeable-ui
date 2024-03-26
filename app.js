@@ -127,7 +127,7 @@ const routeTemplate = (route) => html`
     </div>
 `
 
-const routeTemplteAccordian = (route) => html`
+const routeTemplateAccordian = (route) => html`
 <div class="accordion">
   <input type="checkbox" id="accordion-${route.name}" name="accordion-1" hidden>
   <label class="accordion-header" for="accordion-${route.name}">
