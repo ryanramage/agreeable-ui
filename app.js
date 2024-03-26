@@ -23,6 +23,8 @@ if (Pear.config.linkData) {
   peerKeyElement.value = Pear.config.linkData
   connectButton.classList.add('loading')
   connect(peerKeyElement.value)
+} else {
+  heroSection.style.display = 'block'
 }
 
 connectButton.addEventListener('click', () => {
@@ -88,7 +90,7 @@ const routeTemplate = (route) => html`
           </div>
         </div>
         <div>
-          <button id="${route.name}-button" class="btn btn-lg btn-primary">Execute</button>
+          <button id="${route.name}-button" class="btn btn-lg btn-primary">Submit</button>
         </div>
       </div>
 
@@ -158,12 +160,11 @@ function connect (peerKey) {
 
     // if there is Pear.config.linkData and only one route, go into form mode! 
     if (Pear.config.linkData && api.routes.length === 1) {
-      // hide the hero section
-      heroSection.style.display = 'none'
       // hide the nav 
       document.getElementById('navbar').style.display = 'none'
       // hide any element with class with hero
       document.querySelectorAll('.hero').forEach(el => el.style.display = 'none')
+    } else {
     }
 
     api.routes.forEach(route => {
