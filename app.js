@@ -149,7 +149,6 @@ function connect (peerKey) {
     const routesHolder = document.getElementById('routes')
     render(routesTemplate(api.routes), routesHolder)
     api.routes.forEach(route => {
-      console.log(route)
       let paramEditor = null
       let headerEditor = null
       if (!route.paramSchema.not) {
@@ -175,7 +174,7 @@ function connect (peerKey) {
         const statusElement = document.getElementById(`${route.name}-status`)
         const timeElement = document.getElementById(`${route.name}-time`)
         try {
-          const result = await framed.request(route.name, payload)
+          const result = await framed.request(route.name, payload, { timeout: 10000 })
           const returnType = route?.returnSchema?.type || 'void'
           if (returnType === 'object') codeElement.innerHTML = JSON.stringify(result, null, 4)
           else codeElement.innerHTML = result
