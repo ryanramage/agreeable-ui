@@ -4,6 +4,7 @@ import Protomux from 'protomux'
 import Channel from 'jsonrpc-mux'
 import {html, render} from 'lit-html'
 import prettyMilliseconds from 'pretty-ms'
+const defaultRoute = '/_swag.json' // should import this from swag
 
 const editorOptions = {
   disable_collapse: true,
@@ -152,22 +153,22 @@ function onErrorConnection (message) {
 }
 
 
-function connect (peerKey) {
+function connect (peerKey, route) {
   let publicKey = null
   let conn = null
   try {
     publicKey = b4a.from(peerKey, 'hex')
     conn = dht.connect(publicKey)
   } catch (e) { return onErrorConnection(e.toString()) }
-  console.log('starting connection')
   conn.on('error', (e) => onErrorConnection(e.toString()))
   conn.on('close', () => {
     console.log('the connection is closed')
   })
+  const swagRoute = route || defaultRoute // could read from the end of the input
   
   const framed = new Channel(new Protomux(conn))
   conn.once('open', async () => {
-    const api = await framed.request('_swag', {})
+    const api = await framed.request(swagRoute, {})
     connectButton.classList.remove('loading')
     heroSection.style.display = 'none'
     errorSection.style.display = 'none'
@@ -186,6 +187,13 @@ function connect (peerKey) {
       // hide any element with class with hero
       document.querySelectorAll('.hero').forEach(el => el.style.display = 'none')
     } else {
+
+      // make a download link
+      const downloadEl = document.getElementById('downloadJSON')
+      const name = `${peerKey}${swagRoute}`
+      downloadEl.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(api, null, 2)))
+      downloadEl.setAttribute('download', name)
+      downloadEl.innerHTML = `${swagRoute}`
     }
 
     api.routes.forEach(route => {
@@ -239,5 +247,18 @@ function connect (peerKey) {
         }
       })
     })
+    try {
+      const contractRoute = `/_contract.mjs`
+      // this part is optional. Try and grab the contract
+      const mjs = await framed.request(contractRoute, {})
+      // make a download link
+      const mjsDownloadEl = document.getElementById('downloadMJS')
+      const name = `${peerKey}${contractRoute}`
+      mjsDownloadEl.setAttribute('href', 'data:text/javascript;charset=utf-8,' + encodeURIComponent(mjs))
+      mjsDownloadEl.setAttribute('download', name)
+      mjsDownloadEl.innerHTML = `${contractRoute}`
+    } catch (e) {
+      console.log('error', e)
+    }
   })
 }

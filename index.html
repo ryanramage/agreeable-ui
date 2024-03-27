@@ -15,6 +15,8 @@
         }
       }
       .response { display: none; }
+      #role { display: inline-block; }
+      #version { vertical-align: top; }
       .je-header { display: none !important;}
       .je-object__title { display: none !important;}
       .je-object__controls { display: none !important;}
@@ -69,8 +71,9 @@
       <div class="hero hero-sm bg-gray">
         <div class="hero-body">
           <h1 id="role"></h1>
-          <h3 id="version"></h3> 
+          <span id="version" class="label label-rounded label-default"></span>          
           <p id="description"></p>
+          <a id="downloadJSON"></a> <a id="downloadMJS"></a>
         </div>
       </div>
 
