@@ -14,7 +14,8 @@ const editorOptions = {
   theme: 'spectre'
 }
 const dht = new DHT()
-
+const errorSection = document.getElementById('error-section')
+const errorMessage = document.getElementById('error-message')
 const heroSection = document.getElementById('hero-section')
 const connectButton = document.getElementById('connect')
 const peerKeyElement = document.getElementById('peerKey')
@@ -142,14 +143,34 @@ const routeTemplateAccordian = (route) => html`
 const routesTemplate = (routes) => (routes.length > 1) ?
   html`<div>${routes.map(routeTemplateAccordian)}</div>` : html`<div>${routeTemplate(routes[0])}</div>`
 
+function onErrorConnection (message) {
+  console.log('on error connection', message)
+  errorSection.style.display = 'block'
+  errorMessage.innerHTML = message
+  heroSection.style.display = 'none'
+  connectButton.classList.remove('loading')
+}
+
+
 function connect (peerKey) {
-  const publicKey = b4a.from(peerKey, 'hex')
-  const conn = dht.connect(publicKey)
+  let publicKey = null
+  let conn = null
+  try {
+    publicKey = b4a.from(peerKey, 'hex')
+    conn = dht.connect(publicKey)
+  } catch (e) { return onErrorConnection(e.toString()) }
+  console.log('starting connection')
+  conn.on('error', (e) => onErrorConnection(e.toString()))
+  conn.on('close', () => {
+    console.log('the connection is closed')
+  })
+  
   const framed = new Channel(new Protomux(conn))
   conn.once('open', async () => {
     const api = await framed.request('_swag', {})
     connectButton.classList.remove('loading')
     heroSection.style.display = 'none'
+    errorSection.style.display = 'none'
     document.getElementById('api').style.display = 'block'
     document.getElementById('role').innerHTML = api.role
     document.getElementById('version').innerHTML = api.version

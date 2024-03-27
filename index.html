@@ -25,6 +25,7 @@
       .footer { padding-top: 10px; padding-left: 100px; padding-right: 100px; }
       .footer-links { list-style-type: none; }
       #hero-section { display: none; }
+      #error-section { display: none; }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
@@ -50,7 +51,19 @@
       <p class="empty-title h5">🍐 Ready to Connect 🍐</p>
       <p class="empty-subtitle">Enter the peer's key and then connect</p>
     </div>
-    
+
+    <div id="error-section" class="empty">
+      <div class="empty-icon">
+        <i class="icon icon-stop icon-4x"></i>
+      </div>
+      <p class="empty-title h5">The peer can't be reached</p>
+      <p class="empty-subtitle">
+          Check if there is a typo in the key<br/>
+          <br/>
+          <span id="error-message"></span>
+      </p>
+    </div> 
+
     <div id="api">
 
       <div class="hero hero-sm bg-gray">
