@@ -28,6 +28,7 @@
       .footer-links { list-style-type: none; }
       #hero-section { display: none; }
       #error-section { display: none; }
+      #routes { padding-bottom: 20px; }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
@@ -73,11 +74,21 @@
           <h1 id="role"></h1>
           <span id="version" class="label label-rounded label-default"></span>          
           <p id="description"></p>
-          <a id="downloadJSON"></a> <a id="downloadMJS"></a>
         </div>
       </div>
 
       <div id="routes"></div>
+
+      <ul class="menu">
+        <li class="divider" data-content="Downloads"></li>
+        <li class="menu-item">
+          <a id="downloadMJS" href="#">
+            <i class="icon icon-download"></i> contract.mjs <span class="text-secondary">(import for code projects)</span>
+          </a>
+          <a id="downloadJSON" href="#">
+            <i class="icon icon-download"></i> swag.json <span class="text-secondary">(portable jsonschema version)</span>
+          </a>
+        </li>
     </div>
     <div class="divider text-center about-section" data-content="About"></div>
     <div class="footer">

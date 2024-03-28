@@ -193,7 +193,6 @@ function connect (peerKey, route) {
       const name = `${peerKey}${swagRoute}`
       downloadEl.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(api, null, 2)))
       downloadEl.setAttribute('download', name)
-      downloadEl.innerHTML = `${swagRoute}`
     }
 
     api.routes.forEach(route => {
@@ -256,8 +255,9 @@ function connect (peerKey, route) {
       const name = `${peerKey}${contractRoute}`
       mjsDownloadEl.setAttribute('href', 'data:text/javascript;charset=utf-8,' + encodeURIComponent(mjs))
       mjsDownloadEl.setAttribute('download', name)
-      mjsDownloadEl.innerHTML = `${contractRoute}`
+      // mjsDownloadEl.innerHTML = `${contractRoute}`
     } catch (e) {
+      mjsDownloadEl.style.display = 'none'
       console.log('error', e)
     }
   })
