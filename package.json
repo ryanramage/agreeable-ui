@@ -6,7 +6,7 @@
     "name": "pear-swag-explorer",
     "type": "desktop",
     "gui": {
-      "backgroundColor": "#1F2430",
+      "backgroundColor": "#FFFFFF",
       "height": 540,
       "width": 720
     }

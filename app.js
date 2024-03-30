@@ -221,7 +221,8 @@ function connect (peerKey, route) {
         const statusElement = document.getElementById(`${route.name}-status`)
         const timeElement = document.getElementById(`${route.name}-time`)
         try {
-          const result = await framed.request(route.name, payload, { timeout: 10000 })
+          const path = `/agreement/${api.role}@${api.version}/${route.name}`
+          const result = await framed.request(path, payload, { timeout: 10000 })
           const returnType = route?.returnSchema?.type || 'void'
           if (returnType === 'object') codeElement.innerHTML = JSON.stringify(result, null, 4)
           else codeElement.innerHTML = result
@@ -247,12 +248,13 @@ function connect (peerKey, route) {
       })
     })
     try {
-      const contractRoute = `/_contract.mjs`
+      const agreementRoute = `/_agreement.mjs`
       // this part is optional. Try and grab the contract
-      const mjs = await framed.request(contractRoute, {})
+      const mjs = await framed.request(agreementRoute, {})
+      console.log(mjs)
       // make a download link
       const mjsDownloadEl = document.getElementById('downloadMJS')
-      const name = `${peerKey}${contractRoute}`
+      const name = `${peerKey}${agreementRoute}`
       mjsDownloadEl.setAttribute('href', 'data:text/javascript;charset=utf-8,' + encodeURIComponent(mjs))
       mjsDownloadEl.setAttribute('download', name)
       // mjsDownloadEl.innerHTML = `${contractRoute}`
