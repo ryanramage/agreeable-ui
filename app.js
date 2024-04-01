@@ -6,6 +6,8 @@ import {html, render} from 'lit-html'
 import prettyMilliseconds from 'pretty-ms'
 const defaultRoute = '/_swag.json' // should import this from swag
 
+const { teardown } = Pear
+
 const editorOptions = {
   disable_collapse: true,
   disable_properties: true,
@@ -15,6 +17,7 @@ const editorOptions = {
   theme: 'spectre'
 }
 const dht = new DHT()
+teardown(() => dht.destroy())
 const errorSection = document.getElementById('error-section')
 const errorMessage = document.getElementById('error-message')
 const heroSection = document.getElementById('hero-section')
