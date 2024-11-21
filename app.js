@@ -1,5 +1,5 @@
 import DHT from 'hyperdht'
-import b4a from 'b4a'
+import hie from 'hypercore-id-encoding'
 import Protomux from 'protomux'
 import Channel from 'jsonrpc-mux'
 import {html, render} from 'lit-html'
@@ -160,7 +160,7 @@ function connect (peerKey, route) {
   let publicKey = null
   let conn = null
   try {
-    publicKey = b4a.from(peerKey, 'hex')
+    publicKey = hie.decode(peerKey)
     conn = dht.connect(publicKey)
   } catch (e) { return onErrorConnection(e.toString()) }
   conn.on('error', (e) => onErrorConnection(e.toString()))
