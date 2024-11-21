@@ -1,9 +1,9 @@
 Agreeable UI
 ------------
 
-A RPC explorer like swagger for [agreeable](https://github.com/ryanramage/agreeable) p2p services. 
+A RPC explorer for [agreeable](https://github.com/agree-able/rpc) p2p rpc services. 
 
-See [agreeable-peer](https://github.com/ryanramage/agreeable-peer) for creating p2p services that you can test with this tool.
+See [Agreeable RPC](https://github.com/agree-able/rpc) for creating p2p endpoints that you can test with this tool.
 
 This tool can also be run with pear, over p2p with 
 

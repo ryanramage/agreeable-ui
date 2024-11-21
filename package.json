@@ -1,9 +1,9 @@
 {
-  "name": "agreeable-ui",
+  "name": "@agree-able/ui",
   "main": "index.html",
   "type": "module",
   "pear": {
-    "name": "pear-swag-explorer",
+    "name": "agreeable ui",
     "type": "desktop",
     "gui": {
       "backgroundColor": "#FFFFFF",
